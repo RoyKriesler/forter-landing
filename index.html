@@ -49,7 +49,7 @@
   .hero-fade{position:absolute;inset:0;z-index:1;pointer-events:none;
     background:linear-gradient(90deg,#ffffff 16%,rgba(255,255,255,.82) 36%,rgba(255,255,255,0) 58%)}
   .hero-copy{position:relative;z-index:2;pointer-events:none}
-  .hero-copy a,.hero-copy .navlinks span{pointer-events:auto}
+  .hero-copy a,.hero-copy button,.hero-copy .navlinks span{pointer-events:auto}
   .hero-l{max-width:540px}
   .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:800;letter-spacing:1.8px;color:var(--green-d);text-transform:uppercase;margin-bottom:20px}
   .eyebrow::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(22,207,143,.5);animation:pulse 2.4s infinite}
@@ -74,6 +74,40 @@
   .logos .lab{font-size:10px;font-weight:700;letter-spacing:1.4px;color:#9aa7b3;text-transform:uppercase;white-space:nowrap}
   .logos span.bn{font-weight:800;font-size:14px;color:var(--navy);opacity:.62;transition:opacity .2s;cursor:default}
   .logos span.bn:hover{opacity:1}
+
+  /* ---- fraud-cost calculator modal ---- */
+  .modal-ov{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;
+    background:rgba(0,20,40,.55);backdrop-filter:blur(4px);padding:24px;opacity:0;transition:opacity .22s}
+  .modal-ov.show{display:flex;opacity:1}
+  .modal{background:#fff;width:100%;max-width:560px;border-radius:18px;overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,37,71,.34);transform:translateY(14px) scale(.98);transition:transform .26s cubic-bezier(.2,.8,.3,1)}
+  .modal-ov.show .modal{transform:translateY(0) scale(1)}
+  .modal-hd{background:var(--navy);color:#fff;padding:24px 28px 22px;position:relative}
+  .modal-hd .eyebrow{color:#6fe9bd;margin-bottom:12px}
+  .modal-hd h3{font-size:23px;font-weight:900;letter-spacing:-.5px;line-height:1.12}
+  .modal-hd p{margin-top:8px;font-size:13.5px;color:#bcd2e6;max-width:400px}
+  .modal-x{position:absolute;top:18px;right:20px;width:32px;height:32px;border:none;border-radius:8px;
+    background:rgba(255,255,255,.12);color:#fff;font-size:18px;cursor:pointer;transition:background .15s}
+  .modal-x:hover{background:rgba(255,255,255,.24)}
+  .modal-bd{padding:24px 28px 28px}
+  .fld{margin-bottom:16px}
+  .fld label{display:block;font-size:12.5px;font-weight:700;color:var(--navy);margin-bottom:7px}
+  .ipt{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:10px;padding:0 14px;transition:border-color .15s,box-shadow .15s}
+  .ipt:focus-within{border-color:var(--blue);box-shadow:0 0 0 3px rgba(14,111,240,.13)}
+  .ipt .pre{color:var(--gray);font-weight:700;font-size:15px}
+  .ipt input{flex:1;border:none;outline:none;padding:13px 8px;font-family:inherit;font-size:15px;font-weight:600;color:var(--ink);background:transparent;width:100%}
+  .ipt .post{color:var(--gray);font-weight:700;font-size:14px}
+  .calc-res{margin-top:22px;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .res-loss{background:linear-gradient(135deg,#fff5f6,#ffeaed);padding:18px 22px;border-bottom:1px solid var(--line)}
+  .res-gain{background:linear-gradient(135deg,#eefcf6,#e2f9f0);padding:18px 22px}
+  .res-k{font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--gray)}
+  .res-loss .res-v{font-size:30px;font-weight:900;letter-spacing:-1px;color:var(--red);line-height:1.1;margin-top:3px}
+  .res-gain .res-v{font-size:30px;font-weight:900;letter-spacing:-1px;color:var(--green-d);line-height:1.1;margin-top:3px}
+  .res-note{font-size:12px;color:var(--gray);margin-top:5px}
+  .modal-cta{margin-top:20px;display:flex;gap:12px}
+  .modal-cta .btn{flex:1;justify-content:center}
+  .modal-fine{margin-top:14px;font-size:11px;color:#9aa7b3;text-align:center;line-height:1.5}
+  @media(max-width:560px){.modal-cta{flex-direction:column}}
 </style>
 </head>
 <body>
@@ -107,7 +141,7 @@
       <h1>Every good customer in.<br><span class="b">Every fraudster out.</span></h1>
       <p class="sub">Forter decides every order in real time on the world's largest identity network — so you approve more sales, stop fraud, and never make a good customer wait.</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="#">Book a demo <span class="ar">→</span></a>
+        <button class="btn btn-primary" id="calcOpen" type="button">What is fraud costing you? <span class="ar">→</span></button>
         <a class="btn btn-ghost" href="#">Get the free fraud guide</a>
       </div>
       <div class="trust">Backed by a <b>100% fraud chargeback guarantee</b> — we approve it, we cover it.</div>
@@ -125,6 +159,87 @@
   </div></div>
 
 </div>
+
+<div class="modal-ov" id="calcOv">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Fraud cost calculator">
+    <div class="modal-hd">
+      <div class="eyebrow">Fraud cost calculator</div>
+      <button class="modal-x" id="calcClose" type="button" aria-label="Close">&times;</button>
+      <h3>What is fraud really costing you?</h3>
+      <p>Enter a few numbers and see your annual exposure — and what Forter could recover.</p>
+    </div>
+    <div class="modal-bd">
+      <div class="fld">
+        <label for="cOrders">Monthly online orders</label>
+        <div class="ipt"><input id="cOrders" type="number" min="0" value="50000" inputmode="numeric"></div>
+      </div>
+      <div class="fld">
+        <label for="cAov">Average order value</label>
+        <div class="ipt"><span class="pre">$</span><input id="cAov" type="number" min="0" value="120" inputmode="numeric"></div>
+      </div>
+      <div class="fld">
+        <label for="cRate">Fraud &amp; false-decline rate</label>
+        <div class="ipt"><input id="cRate" type="number" min="0" max="100" step="0.1" value="1.8" inputmode="decimal"><span class="post">%</span></div>
+      </div>
+
+      <div class="calc-res">
+        <div class="res-loss">
+          <div class="res-k">Estimated annual loss to fraud &amp; declines</div>
+          <div class="res-v" id="resLoss">$0</div>
+        </div>
+        <div class="res-gain">
+          <div class="res-k">Recoverable with Forter (est.)</div>
+          <div class="res-v" id="resGain">$0</div>
+          <div class="res-note">Approve more good orders at the same fraud rate — backed by a 100% chargeback guarantee.</div>
+        </div>
+      </div>
+
+      <div class="modal-cta">
+        <a class="btn btn-primary" href="#" style="flex:1;justify-content:center">Get my full report <span class="ar">→</span></a>
+        <a class="btn btn-ghost" href="#">Get the free fraud guide</a>
+      </div>
+      <div class="modal-fine">Illustrative estimate based on your inputs. Actual results vary by industry and order mix.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var ov=document.getElementById('calcOv');
+  var openBtn=document.getElementById('calcOpen');
+  var closeBtn=document.getElementById('calcClose');
+  var fOrders=document.getElementById('cOrders');
+  var fAov=document.getElementById('cAov');
+  var fRate=document.getElementById('cRate');
+  var resLoss=document.getElementById('resLoss');
+  var resGain=document.getElementById('resGain');
+  var RECOVER=0.70; // share of loss Forter can recover (illustrative)
+
+  function fmt(n){
+    n=Math.round(n);
+    if(n>=1e9) return '$'+(n/1e9).toFixed(1).replace(/\.0$/,'')+'B';
+    if(n>=1e6) return '$'+(n/1e6).toFixed(1).replace(/\.0$/,'')+'M';
+    if(n>=1e3) return '$'+(n/1e3).toFixed(0)+'K';
+    return '$'+n.toLocaleString('en-US');
+  }
+  function num(el){ var v=parseFloat(el.value); return (isNaN(v)||v<0)?0:v; }
+  function calc(){
+    var orders=num(fOrders), aov=num(fAov), rate=num(fRate)/100;
+    var annualLoss=orders*12*aov*rate;
+    resLoss.textContent=fmt(annualLoss);
+    resGain.textContent=fmt(annualLoss*RECOVER);
+  }
+  [fOrders,fAov,fRate].forEach(function(el){ el.addEventListener('input',calc); });
+
+  function open(){ calc(); ov.classList.add('show'); document.body.style.overflow='hidden'; }
+  function close(){ ov.classList.remove('show'); document.body.style.overflow=''; }
+  openBtn.addEventListener('click',open);
+  closeBtn.addEventListener('click',close);
+  ov.addEventListener('click',function(e){ if(e.target===ov) close(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+  calc();
+})();
+</script>
 
 <script>
 (function(){
