@@ -1,0 +1,49 @@
+- generic [ref=e2]:
+  - generic [ref=e3]: Now live — Forter Identity for Agentic Commerce. Tell good AI shoppers from bad ones →
+  - navigation [ref=e4]:
+    - generic [ref=e5]:
+      - link [ref=e6] [cursor=pointer]:
+        - /url: "#"
+      - generic [ref=e19]:
+        - generic [ref=e20] [cursor=pointer]: Platform
+        - generic [ref=e21] [cursor=pointer]: Solutions
+        - generic [ref=e22] [cursor=pointer]: Customers
+        - generic [ref=e23] [cursor=pointer]: Resources
+        - generic [ref=e24] [cursor=pointer]: Company
+      - generic [ref=e25]:
+        - generic [ref=e26] [cursor=pointer]: Log in
+        - link "Book a demo" [ref=e27] [cursor=pointer]:
+          - /url: "#"
+  - generic [ref=e28]:
+    - generic:
+      - generic:
+        - generic: Fraud & Chargeback Prevention
+        - heading "Every good customer in. Every fraudster out." [level=1]: Every good customer in.Every fraudster out.
+        - paragraph: Forter decides every order in real time on the world's largest identity network — so you approve more sales, stop fraud, and never make a good customer wait.
+        - generic:
+          - button "What is fraud costing you? →" [ref=e266] [cursor=pointer]:
+            - text: What is fraud costing you?
+            - generic [ref=e267]: →
+          - link "Get the free fraud guide" [ref=e268] [cursor=pointer]:
+            - /url: "#"
+        - generic: Backed by a 100% fraud chargeback guarantee — we approve it, we cover it.
+  - generic [ref=e270]:
+    - generic [ref=e271]:
+      - generic [ref=e272]:
+        - generic [ref=e273]: 2B+
+        - generic [ref=e274]: shoppers known
+      - generic [ref=e275]:
+        - generic [ref=e276]: $2T+
+        - generic [ref=e277]: purchases protected
+      - generic [ref=e278]:
+        - generic [ref=e279]: <1s
+        - generic [ref=e280]: every order decided
+      - generic [ref=e281]:
+        - generic [ref=e282]: 100%
+        - generic [ref=e283]: fraud liability covered
+    - generic [ref=e284]:
+      - generic [ref=e285]: Trusted by
+      - generic [ref=e286]: SEPHORA
+      - generic [ref=e287]: eBay
+      - generic [ref=e288]: Nordstrom
+      - generic [ref=e289]: priceline
