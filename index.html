@@ -108,6 +108,12 @@
   .modal-cta .btn{flex:1;justify-content:center}
   .modal-fine{margin-top:14px;font-size:11px;color:#9aa7b3;text-align:center;line-height:1.5}
   @media(max-width:560px){.modal-cta{flex-direction:column}}
+  @media(max-width:760px){
+    h1{white-space:normal;font-size:36px}
+    .navlinks,.navright .login{display:none}
+    .navright .btn{white-space:nowrap}
+    .hero-fade{background:rgba(255,255,255,.85)}
+  }
 </style>
 </head>
 <body>
@@ -257,7 +263,9 @@
 
   var maxR = 1; NODES.forEach(function(n){ if(n[2]>maxR) maxR=n[2]; });
   var nodes = NODES.map(function(n){
-    return { bx:n[0], by:n[1], x:n[0], y:n[1], r:n[2], c:n[3], hub:n[4],
+    // Keep the graph in the right part of the hero so it never sits behind the headline
+    var gx = 640 + (n[0]-330)*0.66;
+    return { bx:gx, by:n[1], x:gx, y:n[1], r:n[2], c:n[3], hub:n[4],
              ph: Math.random()*6.28, sp: 0.6+Math.random()*0.6, depth: 0.45 + (n[2]/maxR)*0.9 };
   });
   var lines = EDGES.map(function(e){
